@@ -1,0 +1,227 @@
+import React, { useState } from "react";
+
+const upgrades = [
+  {
+    name: "AI Intelligence",
+    icon: "🧠",
+    description: "Access more capable AI models.",
+    features: ["Advanced reasoning", "Longer context", "Faster responses"],
+    price: "Optional"
+  },
+  {
+    name: "Image Studio",
+    icon: "🎨",
+    description: "More creative image-generation capacity.",
+    features: ["Image generation", "More styles", "Higher resolution"],
+    price: "Optional"
+  },
+  {
+    name: "Video Studio",
+    icon: "🎬",
+    description: "Create videos using connected AI services.",
+    features: ["Text to video", "Video tools", "HD options"],
+    price: "Optional"
+  },
+  {
+    name: "Storage Hub",
+    icon: "☁️",
+    description: "Additional cloud storage capacity.",
+    features: ["File storage", "Document management", "Cloud access"],
+    price: "Optional"
+  }
+];
+
+export default function UpgradeHub() {
+  const [active, setActive] = useState("All");
+
+  const categories = ["All", "AI", "Creative", "Storage"];
+
+  const filtered = upgrades.filter(item => {
+    if (active === "All") return true;
+    if (active === "AI") return item.name.includes("AI");
+    if (active === "Creative")
+      return ["Image Studio", "Video Studio"].includes(item.name);
+    return item.name === "Storage Hub";
+  });
+
+  return (
+    <div className="upgrade-page">
+      <header className="upgrade-header">
+        <div>
+          <span className="eyebrow">MYBOT ULTRA V3</span>
+          <h1>Upgrade Hub ✨</h1>
+          <p>Explore tools and capabilities for your AI workspace.</p>
+        </div>
+        <div className="plan-badge">Free Plan</div>
+      </header>
+
+      <section className="upgrade-banner">
+        <span>🚀</span>
+        <h2>Your AI workspace, your choice.</h2>
+        <p>
+          Explore optional upgrades. Your basic chat and file
+          upload features remain available without a subscription.
+        </p>
+      </section>
+
+      <nav className="upgrade-tabs">
+        {categories.map(category => (
+          <button
+            key={category}
+            className={active === category ? "selected" : ""}
+            onClick={() => setActive(category)}
+          >
+            {category}
+          </button>
+        ))}
+      </nav>
+
+      <section className="upgrade-grid">
+        {filtered.map(item => (
+          <article className="upgrade-card" key={item.name}>
+            <div className="upgrade-icon">{item.icon}</div>
+            <h2>{item.name}</h2>
+            <p>{item.description}</p>
+
+            <ul>
+              {item.features.map(feature => (
+                <li key={feature}>✓ {feature}</li>
+              ))}
+            </ul>
+
+            <span className="optional">{item.price}</span>
+
+            <button
+              className="upgrade-button"
+              onClick={() =>
+                alert(
+                  "Upgrade information for " +
+                  item.name +
+                  " will appear here."
+                )
+              }
+            >
+              Explore upgrade
+            </button>
+          </article>
+        ))}
+      </section>
+
+      <footer>
+        MyBot Ultra V3 · Upgrade Hub
+      </footer>
+
+      <style>{`
+        .upgrade-page {
+          min-height: 100vh;
+          padding: 28px;
+          background: #10121c;
+          color: white;
+          font-family: Arial, sans-serif;
+        }
+        .upgrade-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 15px;
+          flex-wrap: wrap;
+        }
+        .eyebrow {
+          color: #a78bfa;
+          letter-spacing: 2px;
+          font-size: 12px;
+        }
+        .upgrade-header h1 {
+          font-size: 32px;
+          margin: 10px 0;
+        }
+        .upgrade-header p, .upgrade-card p {
+          color: #a5a8b8;
+          line-height: 1.5;
+        }
+        .plan-badge, .optional {
+          padding: 10px 16px;
+          border-radius: 20px;
+          background: #292441;
+          color: #c4b5fd;
+        }
+        .upgrade-banner {
+          margin: 30px 0;
+          padding: 25px;
+          border-radius: 20px;
+          background: linear-gradient(120deg,#42227c,#182d55);
+        }
+        .upgrade-banner > span {
+          font-size: 32px;
+        }
+        .upgrade-banner p {
+          color: #ddd6fe;
+          line-height: 1.6;
+        }
+        .upgrade-tabs {
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+          margin-bottom: 22px;
+        }
+        .upgrade-tabs button {
+          border: 1px solid #393b50;
+          background: #202231;
+          color: white;
+          padding: 10px 18px;
+          border-radius: 20px;
+          cursor: pointer;
+        }
+        .upgrade-tabs .selected {
+          background: #7652df;
+          border-color: #7652df;
+        }
+        .upgrade-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit,minmax(230px,1fr));
+          gap: 18px;
+        }
+        .upgrade-card {
+          padding: 22px;
+          border: 1px solid #303347;
+          border-radius: 18px;
+          background: #1b1e2c;
+        }
+        .upgrade-icon {
+          font-size: 34px;
+        }
+        .upgrade-card h2 {
+          font-size: 20px;
+        }
+        .upgrade-card ul {
+          padding-left: 20px;
+          color: #d0d2df;
+          line-height: 2;
+        }
+        .upgrade-button {
+          width: 100%;
+          margin-top: 20px;
+          padding: 13px;
+          background: #7956e8;
+          color: white;
+          border: 0;
+          border-radius: 10px;
+          font-weight: bold;
+          cursor: pointer;
+        }
+        .upgrade-button:hover {
+          background: #906ff5;
+        }
+        footer {
+          text-align: center;
+          margin-top: 40px;
+          color: #85899b;
+        }
+        @media(max-width:480px) {
+          .upgrade-page { padding: 18px; }
+          .upgrade-header h1 { font-size: 27px; }
+        }
+      `}</style>
+    </div>
+  );
+}
